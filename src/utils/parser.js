@@ -10,11 +10,16 @@ const DAYS = [
   "Saturday",
 ];
 
-function formatTime(date) {
+function timeToString(date) {
   return date.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   });
+}
+
+function timeToMinutes(date) {
+  return date.getHours() * 60 + date.getMinutes();
 }
 
 export function parseOpeningHours(value) {
@@ -26,7 +31,6 @@ export function parseOpeningHours(value) {
 
     const schedule = {};
 
-    // Start from beginning of week
     const start = new Date();
     start.setHours(0, 0, 0, 0);
 
@@ -42,13 +46,16 @@ export function parseOpeningHours(value) {
       const dayName = DAYS[dayStart.getDay()];
 
       if (!intervals.length) {
-        schedule[dayName] = null;
+        schedule[dayName] = [];
         continue;
       }
 
-      schedule[dayName] = intervals
-        .map(([from, to]) => `${formatTime(from)} – ${formatTime(to)}`)
-        .join(", ");
+      schedule[dayName] = intervals.map(([from, to]) => ({
+        start: timeToString(from),
+        end: timeToString(to),
+        startMinutes: timeToMinutes(from),
+        endMinutes: timeToMinutes(to),
+      }));
     }
 
     return {

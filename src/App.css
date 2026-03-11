@@ -583,3 +583,39 @@
   .day-row { flex-wrap: wrap; }
   .weekly-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+.timeline {
+  position: relative;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  margin: 6px 0;
+  overflow: hidden;
+}
+
+.time-bar {
+  position: absolute;
+  height: 100%;
+  background: #2563eb;
+  border-radius: 6px;
+}
+
+.day-card {
+  padding: 12px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+
+.day-name {
+  font-weight: 600;
+}
+
+.day-hours {
+  font-size: 13px;
+  color: #374151;
+}
+
+.day-card--closed .timeline {
+  background: #f3f4f6;
+}
